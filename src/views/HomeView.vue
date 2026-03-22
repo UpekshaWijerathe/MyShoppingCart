@@ -1,5 +1,6 @@
 <template>
   <div>
+    <FilterBar :categories="categories" :selectedCategory="selectedCategory" @select="onCategorySelect" />
     <div v-if="loading" class="text-center py-20">
       <p class="text-gray-500">Loading products...</p>
     </div>
@@ -13,10 +14,24 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue"
+import { ref, onMounted } from "vue"
 import { useProducts } from "../composables/useProducts"
 import ProductCard from "../components/ProductCard.vue"
+import FilterBar from "../components/FilterBar.vue"
 
-const { products, loading, error, fetchProducts } = useProducts()
+const { products, loading, error, fetchProducts, fetchByCategory } = useProducts()
+
+const categories = ref(["All", "beauty", "fragrances", "furniture", "groceries", "home-decoration", "kitchen-accessories", "laptops", "mens-shirts", "mens-shoes", "mens-watches", "mobile-accessories", "motorcycles", "skin-care", "smartphones", "sports-accessories", "sunglasses", "tablets", "tops", "vehicle", "womens-bags", "womens-dresses", "womens-jewellery", "womens-shoes", "womens-watches"])
+const selectedCategory = ref("All")
+
+const onCategorySelect = async (category: string) => {
+  selectedCategory.value = category
+  if (category === "All") {
+    await fetchProducts()
+  } else {
+    await fetchByCategory(category)
+  }
+}
+
 onMounted(() => { fetchProducts() })
 </script>

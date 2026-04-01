@@ -34,5 +34,23 @@ export function useProducts() {
     }
   }
 
-  return { products, loading, error, fetchProducts, fetchByCategory }
+  const searchProducts = async (query: string) => {
+    if (!query.trim()) {
+      await fetchProducts()
+      return
+    }
+    loading.value = true
+    error.value = null
+    try {
+      const response = await fetch(`https://dummyjson.com/products/search?q=${query}`)
+      const data: ProductsResponse = await response.json()
+      products.value = data.products
+    } catch (e) {
+      error.value = "Failed to search products"
+    } finally {
+      loading.value = false
+    }
+  }
+
+  return { products, loading, error, fetchProducts, fetchByCategory, searchProducts }
 }

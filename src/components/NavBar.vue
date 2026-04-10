@@ -12,6 +12,13 @@
         />
       </div>
       <button @click="router.push(`/`)" class="text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600">Home</button>
+      <div v-if="authStore.isLoggedIn" class="flex items-center gap-3">
+        <span class="text-sm text-gray-600 dark:text-gray-300">Hi, {{ authStore.user?.firstName }}</span>
+        <button @click="authStore.logout()" class="text-sm text-red-500 hover:text-red-600 font-medium">Logout</button>
+      </div>
+      <button v-else @click="emit(`openLogin`)" class="text-sm bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
+        Login
+      </button>
     </div>
   </nav>
 </template>
@@ -19,12 +26,12 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import { useRouter } from "vue-router"
+import { useAuthStore } from "../stores/authStore"
 
 const router = useRouter()
+const authStore = useAuthStore()
 const searchQuery = ref("")
-const emit = defineEmits(["search"])
+const emit = defineEmits(["search", "openLogin"])
 
-const onSearch = () => {
-  emit("search", searchQuery.value)
-}
+const onSearch = () => { emit("search", searchQuery.value) }
 </script>

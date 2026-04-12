@@ -12,6 +12,9 @@
         />
       </div>
       <button @click="router.push(`/`)" class="text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600">Home</button>
+      <button @click="toggleDark" class="text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600 px-2">
+        {{ isDark ? "Light" : "Dark" }}
+      </button>
       <button @click="emit(`openCart`)" class="relative text-gray-600 dark:text-gray-300 hover:text-blue-600">
         Cart
         <span v-if="cartStore.totalItems > 0" class="absolute -top-2 -right-3 bg-blue-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
@@ -30,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, onMounted } from "vue"
 import { useRouter } from "vue-router"
 import { useAuthStore } from "../stores/authStore"
 import { useCartStore } from "../stores/cartStore"
@@ -40,6 +43,19 @@ const authStore = useAuthStore()
 const cartStore = useCartStore()
 const searchQuery = ref("")
 const emit = defineEmits(["search", "openLogin", "openCart"])
+const isDark = ref(false)
+
+onMounted(() => {
+  const saved = localStorage.getItem("darkMode")
+  isDark.value = saved === "true"
+  document.documentElement.classList.toggle("dark", isDark.value)
+})
+
+const toggleDark = () => {
+  isDark.value = !isDark.value
+  document.documentElement.classList.toggle("dark", isDark.value)
+  localStorage.setItem("darkMode", String(isDark.value))
+}
 
 const onSearch = () => { emit("search", searchQuery.value) }
 </script>

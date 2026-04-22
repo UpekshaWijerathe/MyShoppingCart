@@ -37,7 +37,7 @@
             <span>Stock: {{ product.stock }} left</span>
             <span class="capitalize">Brand: {{ product.brand }}</span>
           </div>
-          <button class="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-xl transition-colors">
+          <button @click="addToCart" class="mt-4 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-medium py-3 px-6 rounded-xl transition-all duration-200">
             Add to Cart
           </button>
         </div>
@@ -49,10 +49,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue"
 import { useRoute, useRouter } from "vue-router"
+import { useCartStore } from "../stores/cartStore"
 import type { Product } from "../types"
 
 const route = useRoute()
 const router = useRouter()
+const cartStore = useCartStore()
 const product = ref<Product | null>(null)
 const loading = ref(false)
 const error = ref<string | null>(null)
@@ -70,4 +72,11 @@ onMounted(async () => {
     loading.value = false
   }
 })
+
+const addToCart = () => {
+  if (product.value) {
+    cartStore.addItem(product.value)
+  }
+}
 </script>
+

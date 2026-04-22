@@ -8,7 +8,7 @@
           <input
             v-model="username"
             type="text"
-            placeholder="e.g. kminchelle"
+            placeholder="Enter your username"
             class="w-full border border-gray-200 dark:border-gray-600 rounded-lg px-4 py-2 text-sm bg-gray-50 dark:bg-gray-700 dark:text-white focus:outline-none focus:border-blue-400"
           />
         </div>
@@ -17,7 +17,7 @@
           <input
             v-model="password"
             type="password"
-            placeholder="e.g. 0lelplR"
+            placeholder="Enter your password"
             class="w-full border border-gray-200 dark:border-gray-600 rounded-lg px-4 py-2 text-sm bg-gray-50 dark:bg-gray-700 dark:text-white focus:outline-none focus:border-blue-400"
           />
         </div>
@@ -29,7 +29,7 @@
         >
           {{ authStore.loading ? "Logging in..." : "Login" }}
         </button>
-        <p class="text-xs text-gray-400 text-center">Test: kminchelle / 0lelplR</p>
+        <p class="text-xs text-gray-400 text-center">Test: emilys / emilyspass</p>
       </div>
     </div>
   </div>

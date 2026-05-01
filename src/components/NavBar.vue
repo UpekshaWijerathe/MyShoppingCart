@@ -1,7 +1,7 @@
 <template>
   <nav class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-4">
-      <h1 class="text-xl font-bold text-blue-600 cursor-pointer" @click="router.push(`/`)">MyStore</h1>
+      <h1 class="text-xl font-bold text-blue-600 cursor-pointer" @click="router.push(`/`)">MyShoppingCart</h1>
       <div class="flex-1">
         <input
           v-model="searchQuery"
